@@ -1,3 +1,9 @@
+import AddPositionForm from "@/components/AddPositionForm";
+
 export default function Admin() {
-  return <div>Admin</div>;
+  return (
+    <div>
+      <AddPositionForm />
+    </div>
+  );
 }
