@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Position {
+  id   Int    @id @default(autoincrement())
+  name String
+  // offers Offer[]
+}
+
+// mode OfferList {
+
+// }
+
+// model Offer {
+//   id           Int      @id @default(autoincrement())
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+//   internship   Boolean  @default(false)
+//   position     Position @relation(fields: [positionId], references: [id])
+//   positionId   Int
+//   published    Boolean  @default(false)
+//   description  String
+//   requirements String
+//   offer        String
+//   // contactPerson 
+// }
+
+// model Dealer {
+//   id Int @id @default(autoincrement())
+// }
+
+// model Application {
+//   id        Int    @id @default(autoincrement())
+//   firstName String
+//   lastName  String
+// }
