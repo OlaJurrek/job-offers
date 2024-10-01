@@ -1,16 +1,17 @@
 import NavLinks from "./NavLinks";
 import Link from "next/link";
-import styles from "./aside.module.css";
+import styles from "./header.module.css";
 import LogoIcon from "../../../../public/images/Logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
+import { kanit } from "@/ui/fonts";
 
 export default function SideNav() {
   return (
-    <aside className={styles.sidenav}>
+    <header className={styles.sidenav}>
       <nav className={styles.nav}>
-        <Link href="/admin" className={styles.logo}>
+        <Link href="/admin" className={`${styles.logo} ${kanit.className}`}>
           <LogoIcon />
-          <span className={styles.logoText}>Voltura</span>
+          <span>Voltura</span>
         </Link>
         <div className={styles.actions}>
           <NavLinks />
@@ -21,6 +22,6 @@ export default function SideNav() {
           </button>
         </div>
       </nav>
-    </aside>
+    </header>
   );
 }

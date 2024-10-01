@@ -7,7 +7,8 @@ import {
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import styles from "./aside.module.css";
+import styles from "./header.module.css";
+import { usePathname } from "next/navigation";
 
 const links = [
   { name: "Home", href: "/admin", icon: HomeIcon },
@@ -25,12 +26,19 @@ const links = [
 ];
 
 export default function NavLinks() {
+  const pathname = usePathname();
   return (
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <Link key={link.name} href={link.href} className={styles.button}>
+          <Link
+            key={link.name}
+            href={link.href}
+            className={`${styles.button} ${
+              pathname === link.href ? styles.active : ""
+            }`}
+          >
             <LinkIcon className="w-6" />
             <span className={styles.label}>{link.name}</span>
           </Link>
