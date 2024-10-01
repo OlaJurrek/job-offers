@@ -1,0 +1,95 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  background-color: var(--violet);
+  padding: 0.7rem;
+  border-radius: var(--borderRadius);
+  height: 5rem;
+}
+
+.logo svg {
+  max-width: 60%;
+  max-height: 100%;
+  width: 100px;
+}
+
+.logoText {
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.empty {
+  display: none;
+  flex-grow: 1;
+  background-color: var(--light);
+  border-radius: var(--borderRadius);
+  height: auto;
+}
+
+.button {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.1rem;
+  line-height: 1.25rem;
+  background-color: var(--light);
+  border-radius: var(--borderRadius);
+  border: none;
+  flex-grow: 1;
+}
+
+.button svg {
+  width: 1.5rem;
+}
+
+.label {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .sidenav {
+    width: 16rem;
+  }
+
+  .logo {
+    height: revert;
+    padding: 3rem 1.4rem 0.7rem;
+    flex-direction: column;
+  }
+
+  .empty {
+    display: revert;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .button {
+    flex-grow: revert;
+  }
+}
+
+@media (min-width: 768px) {
+  .label {
+    display: revert;
+  }
+}
