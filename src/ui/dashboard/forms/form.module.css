@@ -1,0 +1,86 @@
+.fieldsWrapper {
+  margin-bottom: 1rem;
+  padding: 2rem 2rem 0.5rem;
+  border-radius: var(--borderRadius);
+  background-color: var(--light);
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  color: var(--violet-800);
+  font-size: 1.1rem;
+  letter-spacing: 0.015rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.input {
+  width: min(100%, 40rem);
+  font-size: 1.1rem;
+  padding: 0.4rem 0.5rem 0.3rem;
+  letter-spacing: 0.025rem;
+  border: 1px solid var(--violet-300);
+  border-radius: var(--borderRadius);
+}
+
+.preview {
+  max-width: 300px;
+  height: auto;
+}
+
+.info {
+  letter-spacing: 0.015rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.uploadButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.4rem 1rem 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  white-space: nowrap;
+  border-radius: var(--borderRadius);
+  border: 1px solid transparent;
+  outline-offset: 5px;
+}
+
+.primary {
+  background-color: var(--violet);
+  color: var(--white);
+  border-color: var(--violet);
+}
+
+.outline {
+  color: var(--violet-800);
+  background-color: var(--white);
+  border-color: var(--violet-800);
+}
+
+.secondary {
+  background-color: var(--violet-800);
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.withIcon {
+  padding-left: 0.6rem;
+}

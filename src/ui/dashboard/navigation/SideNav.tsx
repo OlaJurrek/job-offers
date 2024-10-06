@@ -1,6 +1,6 @@
 import NavLinks from "./NavLinks";
 import Link from "next/link";
-import styles from "./header.module.css";
+import styles from "./navigation.module.css";
 import LogoIcon from "../../../../public/images/Logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { kanit } from "@/ui/fonts";

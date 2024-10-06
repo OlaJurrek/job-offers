@@ -7,7 +7,7 @@ import {
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import styles from "./header.module.css";
+import styles from "./navigation.module.css";
 import { usePathname } from "next/navigation";
 
 const links = [

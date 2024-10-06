@@ -1,5 +1,10 @@
-import CreatePositionForm from "@/ui/dashboard/positions/CreatePositionForm";
+import CreatePositionForm from "@/ui/dashboard/forms/CreatePositionForm";
 
 export default function CreatePage() {
-  return <CreatePositionForm />;
+  return (
+    <>
+      <div>TODO: Breadcrumbs </div>
+      <CreatePositionForm />
+    </>
+  );
 }

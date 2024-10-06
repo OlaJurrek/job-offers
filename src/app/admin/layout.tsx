@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import SideNav from "@/ui/dashboard/aside/SideNav";
+import SideNav from "@/ui/dashboard/navigation/SideNav";
 import styles from "./layout.module.css";
 import { yantramanav } from "@/ui/fonts";
 

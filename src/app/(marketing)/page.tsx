@@ -1,13 +1,8 @@
 import prisma from "@/utils/prisma";
 import Image from "next/image";
-import fs from "node:fs/promises";
 
 export default async function Home() {
   const positions = await prisma.position.findMany();
-  const files = await fs.readdir("./public/uploads");
-  const images = files
-    // .filter((file) => file.endsWith(".jpg"))
-    .map((file) => `/uploads/${file}`);
 
   console.log(positions);
 

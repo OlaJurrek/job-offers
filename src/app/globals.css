@@ -1,8 +1,14 @@
 :root {
   --violet: #7b10c1;
   --violet-100: #f1d6f1;
+  --violet-300: #9778a8;
+  --violet-800: #3b2a45;
+  --grey: #b2a7b8;
+  --blue-200: #7da3c0;
+  --blue: #0080ff;
+  --red: #b40000;
   --light: #f8f7f8;
-  --blue: #7da3c0;
+  --white: #faf9f6;
   --borderRadius: 0.375rem;
 }
 
@@ -10,6 +16,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  outline-color: var(--blue);
 }
 
 * {
@@ -60,4 +67,14 @@ ul {
 #root,
 #__next {
   isolation: isolate;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
