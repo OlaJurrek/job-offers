@@ -1,31 +1,30 @@
 "use client";
-
-import { useRef, useState } from "react";
+import React from "react";
+import { createPosition } from "@/utils/actions/actions";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSchema, formSchema } from "../utils/validation/add-position";
-
+import { PositionForm, positionSchema } from "@/utils/validation/validations";
 import Image from "next/image";
-import { submitForm } from "../utils/actions/action-add-position";
 
-function AddPositionForm() {
-  // initialize the useForm hook with the Zod resolver and default values
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { private: false, image: null },
-  });
+export default function CreatePositionForm() {
+  const [preview, setPreview] = React.useState<string | null>(null);
 
   const {
-    register,
     handleSubmit,
+    register,
     setValue,
     formState: { errors, isSubmitting },
-  } = form;
+  } = useForm<PositionForm>({
+    resolver: zodResolver(positionSchema),
+    defaultValues: {
+      name: "",
+      image: null,
+    },
+  });
+  const hiddenFileInputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const hiddenFileInputRef = useRef<HTMLInputElement | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const triggerFileInput = () => hiddenFileInputRef.current?.click();
 
-  // function to handle file input changes
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -49,18 +48,14 @@ function AddPositionForm() {
     setValue("image", null);
   };
 
-  const triggerFileInput = () => hiddenFileInputRef.current?.click();
-
-  const onSubmitForm: SubmitHandler<FormSchema> = async (data) => {
+  const onSubmitForm: SubmitHandler<PositionForm> = async (data) => {
     console.log("data", data);
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("description", data.description || "");
-    formData.append("private", data.private ? "true" : "false");
     formData.append("image", data.image as File);
 
     // call the server action
-    const { data: success, errors } = await submitForm(formData);
+    const { data: success, errors } = await createPosition(formData);
 
     if (errors) {
       // handle errors (e.g., display an alert notification or add error messages to the form)
@@ -75,6 +70,13 @@ function AddPositionForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
+      {/* Position Name */}
+      <div>
+        <label htmlFor="name">Position name</label>
+        <input type="text" id="name" {...register("name")} />
+        <p className="error">{errors.name && errors.name.message}</p>
+      </div>
+      {/* Position Image */}
       <div className="upload">
         {!preview && (
           <button type="button" onClick={triggerFileInput}>
@@ -112,32 +114,9 @@ function AddPositionForm() {
         />
         <p className="error">{errors.image && errors.image.message}</p>
       </div>
-
-      <div className="field-wrap">
-        <label htmlFor="name">Name </label>
-        <input {...register("name")} type="text" />
-        <p className="error">{errors.name && errors.name.message}</p>
-      </div>
-
-      <div className="field-wrap">
-        <label htmlFor="description">Description </label>
-        <textarea {...register("description")} />
-        <p className="error">
-          {errors.description && errors.description.message}
-        </p>
-      </div>
-
-      <div className="private">
-        <input {...register("private")} type="checkbox" />
-        <label htmlFor="private">Is this private? </label>
-        <p>{errors.private && errors.private.message}</p>
-      </div>
-
-      <button className="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Loading" : "Submit"}
+      <button className="" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting" : "Submit"}
       </button>
     </form>
   );
 }
-
-export default AddPositionForm;

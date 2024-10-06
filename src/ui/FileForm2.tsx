@@ -3,16 +3,41 @@
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSchema, formSchema } from "../utils/validation/add-position";
+// import { FormSchema, formSchema } from "../utils/validation/add-position";
 
 import Image from "next/image";
-import { submitForm } from "../utils/actions/action-add-position";
+// import { submitForm } from "../utils/actions/action-add-position";
 
-function AddPositionForm() {
+import { z } from "zod";
+
+// Define the file size limit and accepted file types as constants
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+
+export const formSchema = z.object({
+  image: z
+    .instanceof(File)
+    .refine(
+      (file) => file.size <= MAX_FILE_SIZE,
+      `Image size must be less than ${MAX_FILE_SIZE / 1024 / 1024}MB.`
+    )
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      `Only the following image types are allowed: ${ACCEPTED_IMAGE_TYPES.join(
+        ", "
+      )}.`
+    )
+    .optional()
+    .nullable(),
+});
+
+export type FormSchema = z.infer<typeof formSchema>;
+
+function FileForm2() {
   // initialize the useForm hook with the Zod resolver and default values
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: { private: false, image: null },
+    defaultValues: { image: null },
   });
 
   const {
@@ -52,23 +77,20 @@ function AddPositionForm() {
   const triggerFileInput = () => hiddenFileInputRef.current?.click();
 
   const onSubmitForm: SubmitHandler<FormSchema> = async (data) => {
-    console.log("data", data);
+    console.log("file form 2", data);
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description || "");
-    formData.append("private", data.private ? "true" : "false");
     formData.append("image", data.image as File);
 
     // call the server action
-    const { data: success, errors } = await submitForm(formData);
+    // const { data: success, errors } = await submitForm(formData);
 
-    if (errors) {
-      // handle errors (e.g., display an alert notification or add error messages to the form)
-    }
+    // if (errors) {
+    //   // handle errors (e.g., display an alert notification or add error messages to the form)
+    // }
 
-    if (success) {
-      // handle success (e.g., display a success notification)
-    }
+    // if (success) {
+    //   // handle success (e.g., display a success notification)
+    // }
 
     // fallback notification can go here
   };
@@ -108,29 +130,9 @@ function AddPositionForm() {
           ref={hiddenFileInputRef}
           hidden
           type="file"
-          onChange={handleFileChange}
+          //   onChange={handleFileChange}
         />
         <p className="error">{errors.image && errors.image.message}</p>
-      </div>
-
-      <div className="field-wrap">
-        <label htmlFor="name">Name </label>
-        <input {...register("name")} type="text" />
-        <p className="error">{errors.name && errors.name.message}</p>
-      </div>
-
-      <div className="field-wrap">
-        <label htmlFor="description">Description </label>
-        <textarea {...register("description")} />
-        <p className="error">
-          {errors.description && errors.description.message}
-        </p>
-      </div>
-
-      <div className="private">
-        <input {...register("private")} type="checkbox" />
-        <label htmlFor="private">Is this private? </label>
-        <p>{errors.private && errors.private.message}</p>
       </div>
 
       <button className="submit" disabled={isSubmitting}>
@@ -140,4 +142,4 @@ function AddPositionForm() {
   );
 }
 
-export default AddPositionForm;
+export default FileForm2;

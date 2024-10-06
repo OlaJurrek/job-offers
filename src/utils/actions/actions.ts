@@ -1,9 +1,10 @@
 "use server";
-
-import { formSchema } from "../../utils/validation/add-position";
+import prisma from "@/utils/prisma";
 import { z } from "zod";
-import fs from "node:fs/promises";
 import { revalidatePath } from "next/cache";
+import { positionSchema } from "../validation/validations";
+import fs from "node:fs/promises";
+import crypto from "node:crypto";
 
 export const transformZodErrors = (error: z.ZodError) => {
   return error.issues.map((issue) => ({
@@ -12,37 +13,41 @@ export const transformZodErrors = (error: z.ZodError) => {
   }));
 };
 
-export async function submitForm(formData: FormData) {
-  console.log("action");
+export async function createPosition(formData: FormData) {
   try {
-    // fake a delay
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // for (const [key, value] of formData) {
-    //   console.log("key", `${key} ${value}`);
-    // }
-
     //validate the FormData
-    const validatedFields = formSchema.parse({
+    const validatedFields = positionSchema.safeParse({
       name: formData.get("name"),
-      description: formData.get("description"),
-      private: formData.get("private") === "true" ? true : false,
-      cover: formData.get("image"),
+      image: formData.get("image"),
     });
 
     const file = formData.get("image") as File;
+
     const arrayBuffer = await file.arrayBuffer();
+    const hashSum = crypto.createHash("sha256");
     const buffer = new Uint8Array(arrayBuffer);
-    console.log(validatedFields);
-    console.log("file", buffer);
+    hashSum.update(buffer);
+    const hex = hashSum.digest("hex");
+    const extension = file.name.split(".")[1];
 
-    await fs.writeFile(`./public/uploads/${file.name}`, buffer);
+    const filePath = `./public/uploads/${hex}.${extension}`;
+    const absoluteFilePath = `/uploads/${hex}.${extension}`;
 
-    revalidatePath("/");
-
-    console.log("fields", validatedFields.image);
+    await fs.writeFile(filePath, buffer);
 
     // send validated data to database here
+
+    if (validatedFields.success) {
+      const name = validatedFields.data.name;
+      await prisma.position.create({
+        data: {
+          name,
+          imageSrc: absoluteFilePath,
+        },
+      });
+
+      revalidatePath("/");
+    }
 
     return {
       errors: null,

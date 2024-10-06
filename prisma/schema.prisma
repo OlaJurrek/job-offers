@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Position {
-  id   Int    @id @default(autoincrement())
-  name String
+  id       Int     @id @default(autoincrement())
+  name     String
+  imageSrc String?
   // offers Offer[]
 }
 

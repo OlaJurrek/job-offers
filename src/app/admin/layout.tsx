@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className={yantramanav.className}>
         <div className={styles.layout}>
           <SideNav />
-          {children}
+          <main className={styles.main}>{children}</main>
         </div>
       </body>
     </html>

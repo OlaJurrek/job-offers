@@ -11,3 +11,16 @@
     padding: 1rem 0.5rem;
   }
 }
+
+.main {
+  flex-grow: 1;
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+@media (min-width: 992px) {
+  .main {
+    padding: 0 2rem 2rem;
+  }
+}
