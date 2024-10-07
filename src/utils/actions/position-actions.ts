@@ -2,70 +2,58 @@
 import prisma from "@/utils/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { positionSchema } from "../validation/validations";
-import fs from "node:fs/promises";
-import crypto from "node:crypto";
+import { saveFile } from "./actions-helpers";
 
-export const transformZodErrors = (error: z.ZodError) => {
-  return error.issues.map((issue) => ({
-    path: issue.path.join("."),
-    message: issue.message,
+function transformZodErrors(error: z.ZodError) {
+  return error.issues.map(({ message, path }) => ({
+    message,
+    input: path.join("."),
   }));
-};
+}
 
 export async function createPosition(formData: FormData) {
-  try {
-    //validate the FormData
-    const validatedFields = positionSchema.safeParse({
-      name: formData.get("name"),
-      image: formData.get("image"),
-    });
+  // Check if optional image is in the formData
+  let image: FormDataEntryValue | null = formData.get("image");
+  if (image === "null") {
+    image = null;
+  }
 
-    const file = formData.get("image") as File;
+  // Save image in uploads
+  let imageSrc: string = "";
+  if (image instanceof File) {
+    imageSrc = await saveFile(image);
+  }
 
-    const arrayBuffer = await file.arrayBuffer();
-    const hashSum = crypto.createHash("sha256");
-    const buffer = new Uint8Array(arrayBuffer);
-    hashSum.update(buffer);
-    const hex = hashSum.digest("hex");
-    const extension = file.name.split(".")[1];
+  // Validate the formData
+  const validatedFields = positionSchema.safeParse({
+    name: formData.get("name"),
+    // image: formData.get("image"), // for error testing
+    image,
+  });
 
-    const filePath = `./public/uploads/${hex}.${extension}`;
-    const absoluteFilePath = `/uploads/${hex}.${extension}`;
-
-    await fs.writeFile(filePath, buffer);
-
-    // send validated data to database here
-
-    if (validatedFields.success) {
-      const name = validatedFields.data.name;
+  if (validatedFields.success) {
+    // Send validated data to database
+    const name = validatedFields.data.name;
+    try {
       await prisma.position.create({
         data: {
           name,
-          imageSrc: absoluteFilePath,
+          imageSrc,
         },
       });
-
-      revalidatePath("/");
+    } catch (error) {
+      // If a database error occurs, return a more specific error.
+      console.error("error", error);
+      return { message: "Database error: Failed to create position." };
     }
-
-    return {
-      errors: null,
-      data: "data received and mutated",
-    };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return {
-        errors: transformZodErrors(error),
-        data: null,
-      };
-    }
-
-    return {
-      errors: {
-        message: "An unexpected error occurred. Could not create shelf.",
-      },
-      data: null,
-    };
+    // Revalidate the cache for the positions pages and redirect the user.
+    revalidatePath("/");
+    revalidatePath("/admin/positions");
+    redirect("/admin/positions");
+  } else {
+    // Handle errors
+    return transformZodErrors(validatedFields.error);
   }
 }

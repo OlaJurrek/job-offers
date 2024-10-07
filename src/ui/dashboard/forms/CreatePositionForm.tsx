@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PositionForm, positionSchema } from "@/utils/validation/validations";
 import NextImage from "next/image";
+import Link from "next/link";
 import styles from "./form.module.css";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
@@ -48,13 +49,10 @@ export default function CreatePositionForm() {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        // setPreview(reader.result as string);
         const image = new Image();
         image.src = reader.result as string;
         image.onload = function () {
           const { height, width } = image;
-          // setHeight(height);
-          // setWidth(width);
           setPreview({
             src: reader.result as string,
             height,
@@ -79,20 +77,21 @@ export default function CreatePositionForm() {
 
   const onSubmitForm: SubmitHandler<PositionForm> = async (data) => {
     console.log("data", data);
+    console.log("errors", errors);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("image", data.image as File);
 
     // call the server action
-    const { data: success, errors } = await createPosition(formData);
+    // const { data: success, errors } = await createPosition(formData);
+    createPosition(formData);
+    // if (errors) {
+    //   // handle errors (e.g., display an alert notification or add error messages to the form)
+    // }
 
-    if (errors) {
-      // handle errors (e.g., display an alert notification or add error messages to the form)
-    }
-
-    if (success) {
-      // handle success (e.g., display a success notification)
-    }
+    // if (success) {
+    //   // handle success (e.g., display a success notification)
+    // }
 
     // fallback notification can go here
   };
@@ -173,13 +172,16 @@ export default function CreatePositionForm() {
             onChange={handleFileChange}
             aria-describedby="uploadInfo"
           />
-          <p className="error">{errors.image && errors.image.message}</p>
+          {/* <p className="error">{errors.image && errors.image.message}</p> */}
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <button className={`${styles.button} ${styles.secondary}`}>
+        <Link
+          href="/admin/positions"
+          className={`${styles.button} ${styles.secondary}`}
+        >
           Cancel
-        </button>
+        </Link>
         <button
           className={`${styles.button} ${styles.primary}`}
           disabled={isSubmitting}

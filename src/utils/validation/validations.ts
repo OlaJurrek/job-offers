@@ -16,6 +16,7 @@ export const positionSchema = z.object({
     .min(3, "Name should be at least 3 characters"),
   image: z
     .instanceof(File)
+    // .any()
     .refine(
       (file) => file.size <= MAX_FILE_SIZE,
       `Image size must be less than ${MAX_FILE_SIZE / 1024 / 1024}MB.`
