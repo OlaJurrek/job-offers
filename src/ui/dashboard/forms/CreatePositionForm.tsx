@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { createPosition } from "@/utils/actions/position-actions";
+import { createPosition, Response } from "@/utils/actions/position-actions";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PositionForm, positionSchema } from "@/utils/validation/validations";
@@ -8,6 +8,7 @@ import NextImage from "next/image";
 import Link from "next/link";
 import styles from "./form.module.css";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
+import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
 
 type Preview = {
   src: string | null;
@@ -24,13 +25,19 @@ const INITIAL_PREVIEW: Preview = {
 };
 
 export default function CreatePositionForm() {
+  const hiddenFileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = React.useState<Preview>(INITIAL_PREVIEW);
+  const [serverResponse, setServerResponse] = React.useState<Response>({
+    message: null,
+    errors: {},
+  });
 
   const {
     handleSubmit,
     register,
     setValue,
-    formState: { errors, isSubmitting },
+    trigger,
+    formState: { errors: clientErrors, isSubmitting },
   } = useForm<PositionForm>({
     resolver: zodResolver(positionSchema),
     defaultValues: {
@@ -38,7 +45,9 @@ export default function CreatePositionForm() {
       image: null,
     },
   });
-  const hiddenFileInputRef = React.useRef<HTMLInputElement | null>(null);
+
+  const isNameError = clientErrors.name || serverResponse.errors?.name;
+  const isImageError = clientErrors.image || serverResponse.errors?.image;
 
   const triggerFileInput = () => hiddenFileInputRef.current?.click();
 
@@ -61,6 +70,7 @@ export default function CreatePositionForm() {
           });
         };
         setValue("image", file); // manually set the image in the form state
+        trigger("image");
       };
 
       reader.readAsDataURL(file);
@@ -73,32 +83,37 @@ export default function CreatePositionForm() {
     setPreview(INITIAL_PREVIEW);
     hiddenFileInputRef.current!.value = "";
     setValue("image", null);
+    trigger("image");
   };
 
   const onSubmitForm: SubmitHandler<PositionForm> = async (data) => {
     console.log("data", data);
-    console.log("errors", errors);
+    console.log("errors", clientErrors);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("image", data.image as File);
 
     // call the server action
-    // const { data: success, errors } = await createPosition(formData);
-    createPosition(formData);
-    // if (errors) {
-    //   // handle errors (e.g., display an alert notification or add error messages to the form)
-    // }
+    const errorResponse = await createPosition(formData);
 
-    // if (success) {
-    //   // handle success (e.g., display a success notification)
-    // }
-
-    // fallback notification can go here
+    if (errorResponse) {
+      setServerResponse(errorResponse);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)}>
+    <form onSubmit={handleSubmit(onSubmitForm)} aria-describedby="generalError">
       <div className={styles.fieldsWrapper}>
+        {serverResponse.message && (
+          <p
+            id="generalError"
+            className={styles.formError}
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {serverResponse.message}
+          </p>
+        )}
         {/* Position Name */}
         <div className={styles.field}>
           <label className={styles.label} htmlFor="name">
@@ -106,11 +121,18 @@ export default function CreatePositionForm() {
           </label>
           <input
             className={styles.input}
+            aria-invalid={isNameError ? true : undefined}
+            aria-describedby={isNameError ? "nameError" : undefined}
             type="text"
             id="name"
             {...register("name")}
           />
-          <p className="error">{errors.name && errors.name.message}</p>
+          <ErrorMessage
+            css={styles.fieldError}
+            errorId="nameError"
+            clientError={clientErrors.name?.message}
+            serverError={serverResponse.errors?.name}
+          />
         </div>
         {/* Position Image */}
         <div className={styles.field}>
@@ -120,7 +142,7 @@ export default function CreatePositionForm() {
                 type="button"
                 onClick={triggerFileInput}
                 className={`${styles.button} ${styles.primary} ${styles.withIcon}`}
-                aria-describedby="uploadInfo"
+                aria-hidden="true"
               >
                 <ArrowUpOnSquareIcon width={24} />
                 <span>Upload Image</span>
@@ -167,12 +189,21 @@ export default function CreatePositionForm() {
           <input
             {...register("image")}
             ref={hiddenFileInputRef}
-            hidden
+            className="visually-hidden"
+            accept="image/jpeg,image/png,image/avif,image/svg+xml,image/webp"
             type="file"
             onChange={handleFileChange}
-            aria-describedby="uploadInfo"
+            aria-describedby={`uploadInfo${
+              isImageError ? "," + "imageError" : ""
+            }`}
+            aria-invalid={isImageError ? true : undefined}
           />
-          {/* <p className="error">{errors.image && errors.image.message}</p> */}
+          <ErrorMessage
+            css={styles.fieldError}
+            errorId="imageError"
+            clientError={clientErrors.image?.message}
+            serverError={serverResponse.errors?.image}
+          />
         </div>
       </div>
       <div className={styles.buttonWrapper}>

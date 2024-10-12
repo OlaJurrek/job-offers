@@ -11,9 +11,7 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 export const positionSchema = z.object({
-  name: z
-    .string({ message: "Name is required" })
-    .min(3, "Name should be at least 3 characters"),
+  name: z.string().min(3, "Name must be at least 3 characters"),
   image: z
     .instanceof(File)
     // .any()

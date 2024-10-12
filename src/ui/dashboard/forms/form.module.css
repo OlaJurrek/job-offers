@@ -13,8 +13,8 @@
   display: block;
   color: var(--violet-800);
   font-size: 1.1rem;
-  letter-spacing: 0.015rem;
   font-weight: 500;
+  letter-spacing: 0.015rem;
   margin-bottom: 0.2rem;
 }
 
@@ -35,7 +35,6 @@
 .info {
   letter-spacing: 0.015rem;
   margin-top: 0.7rem;
-  margin-bottom: 0.8rem;
 }
 
 .uploadButtons {
@@ -84,4 +83,19 @@
 
 .withIcon {
   padding-left: 0.6rem;
+}
+
+.formError {
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.015rem;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.fieldError {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: var(--red);
+  line-height: 1.3;
 }

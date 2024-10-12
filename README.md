@@ -1,3 +1,8 @@
+# TODO
+
+- accessibility in form - aria describedby - czy są czytane puste divy zanim powstanie błąd?
+  https://github.com/vercel/next-learn/issues/418
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
