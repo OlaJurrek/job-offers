@@ -11,11 +11,14 @@ datasource db {
 }
 
 model Position {
-  id        Int       @id @default(autoincrement())
-  name      String
-  imageSrc  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
+  id          String    @id @default(uuid())
+  name        String
+  imageSrc    String?
+  imageHeight Int?
+  imageWidth  Int?
+  imageAlt    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime?
   // offers Offer[]
 }
 

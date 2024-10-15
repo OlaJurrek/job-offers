@@ -20,29 +20,35 @@ const INITIAL_PREVIEW: Preview = {
 };
 
 type ImageInputProps = {
-  serverError: string[] | undefined;
+  imageInput: string;
+  altInput: string;
+  heightInput: string;
+  widthInput: string;
   clientError: string | undefined;
-  name: string;
+  serverError: string[] | undefined;
   formats?: string;
-  alt: string;
 };
 
 export default function ImageInput({
-  name,
+  imageInput,
+  altInput,
+  heightInput,
+  widthInput,
   clientError,
   serverError,
-  alt,
   formats = "image/jpeg,image/png,image/avif,image/svg+xml,image/webp",
 }: ImageInputProps) {
   const { register, setValue, trigger } = useFormContext();
   const [preview, setPreview] = React.useState<Preview>(INITIAL_PREVIEW);
-  const hiddenFileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const heightInputRef = React.useRef<HTMLInputElement | null>(null);
+  const widthInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const isError = clientError || serverError;
   const uploadInfoId = React.useId();
   const errorTextId = React.useId();
 
-  const triggerFileInput = () => hiddenFileInputRef.current?.click();
+  const triggerFileInput = () => fileInputRef.current?.click();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -51,19 +57,21 @@ export default function ImageInput({
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        const image = new Image();
-        image.src = reader.result as string;
-        image.onload = function () {
-          const { height, width } = image;
+        const imageElement = new Image();
+        imageElement.src = reader.result as string;
+        imageElement.onload = function () {
+          const { height, width } = imageElement;
           setPreview({
             src: reader.result as string,
             height,
             width,
             name: file.name,
           });
+          setValue(heightInput, height.toString());
+          setValue(widthInput, width.toString());
         };
-        setValue(name, file); // manually set the image in the form state
-        trigger(name);
+        setValue(imageInput, file); // manually set the image in the form state
+        trigger(imageInput);
       };
 
       reader.readAsDataURL(file);
@@ -74,9 +82,11 @@ export default function ImageInput({
 
   const removeImage = () => {
     setPreview(INITIAL_PREVIEW);
-    hiddenFileInputRef.current!.value = "";
-    setValue(name, null);
-    trigger(name);
+    fileInputRef.current!.value = "";
+    setValue(imageInput, null);
+    setValue(heightInput, "");
+    setValue(widthInput, "");
+    trigger(imageInput);
   };
 
   return (
@@ -87,7 +97,7 @@ export default function ImageInput({
             type="button"
             onClick={triggerFileInput}
             className={`${styles.button} ${styles.primary} ${styles.withIcon}`}
-            aria-hidden="true"
+            aria-describedby={uploadInfoId}
           >
             <ArrowUpOnSquareIcon width={24} />
             <span>Upload Image</span>
@@ -104,7 +114,7 @@ export default function ImageInput({
             <NextImage
               src={preview.src}
               className={styles.preview}
-              alt={alt}
+              alt=""
               height={preview.height}
               width={preview.width}
             />
@@ -132,8 +142,8 @@ export default function ImageInput({
         </div>
       )}
       <input
-        {...register(name)}
-        ref={hiddenFileInputRef}
+        {...register(imageInput)}
+        ref={fileInputRef}
         className="visually-hidden"
         accept={formats}
         type="file"
@@ -146,6 +156,29 @@ export default function ImageInput({
         errorId={errorTextId}
         clientError={clientError}
         serverError={serverError}
+      />
+      <label className={styles.label} htmlFor="alt">
+        Text description of an image (alt)
+      </label>
+      <input
+        className={styles.input}
+        type="text"
+        id="alt"
+        {...register(altInput)}
+      />
+      <input
+        {...register(heightInput)}
+        className="visually-hidden"
+        type="text"
+        aria-hidden="true"
+        ref={heightInputRef}
+      />
+      <input
+        {...register(widthInput)}
+        className="visually-hidden"
+        type="text"
+        aria-hidden="true"
+        ref={widthInputRef}
       />
     </div>
   );

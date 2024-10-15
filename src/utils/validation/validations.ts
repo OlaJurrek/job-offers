@@ -12,12 +12,15 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export const positionSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
+  alt: z.string(),
+  height: z.string(),
+  width: z.string(),
   image: z
     .instanceof(File)
     // .any()
     .refine(
       (file) => file.size <= MAX_FILE_SIZE,
-      `Image size must be less than ${MAX_FILE_SIZE / 1024 / 1024}MB.`
+      `Image size must be less than ${MAX_FILE_SIZE / 1024 / 1024} MB.`
     )
     .refine(
       (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),

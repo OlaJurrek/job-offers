@@ -15,6 +15,9 @@ export default function CreatePositionForm() {
     defaultValues: {
       name: "",
       image: null,
+      alt: "",
+      height: "",
+      width: "",
     },
   });
 
@@ -35,6 +38,9 @@ export default function CreatePositionForm() {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("image", data.image as File);
+    formData.append("alt", data.alt);
+    formData.append("width", data.width);
+    formData.append("height", data.height);
 
     // call the server action
     const errorResponse = await createPosition(formData);
@@ -83,11 +89,17 @@ export default function CreatePositionForm() {
           </div>
           {/* Position Image */}
           <ImageInput
-            name="image"
-            alt="An uploaded position image"
+            imageInput="image"
+            altInput="alt"
             serverError={serverResponse.errors?.image}
             clientError={clientErrors.image?.message}
+            heightInput="height"
+            widthInput="width"
           />
+          {/*  Image alt */}
+          {/* <div className={styles.field}>
+
+          </div> */}
         </div>
         <div className={styles.buttonWrapper}>
           <Link

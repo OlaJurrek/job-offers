@@ -1,6 +1,6 @@
 .fieldsWrapper {
   margin-bottom: 1rem;
-  padding: 2rem 2rem 0.5rem;
+  padding: 2rem 2rem 1.5rem;
   border-radius: var(--borderRadius);
   background-color: var(--light);
 }
@@ -35,11 +35,13 @@
 .info {
   letter-spacing: 0.015rem;
   margin-top: 0.7rem;
+  margin-bottom: 0.8rem;
 }
 
 .uploadButtons {
   display: flex;
   gap: 1rem;
+  margin-bottom: 1.3rem;
 }
 
 .buttonWrapper {

@@ -31,6 +31,9 @@ export async function createPosition(formData: FormData) {
     name: formData.get("name"),
     // image: formData.get("image"), // for testing server validation
     image,
+    alt: formData.get("alt"),
+    height: formData.get("height"),
+    width: formData.get("width"),
   });
 
   if (!validatedFields.success) {
@@ -43,11 +46,17 @@ export async function createPosition(formData: FormData) {
   } else {
     // Send validated data to database
     const name = validatedFields.data.name;
+    const imageAlt = validatedFields.data.alt;
+    const imageHeight = Number(validatedFields.data.height);
+    const imageWidth = Number(validatedFields.data.width);
     try {
       await prisma.position.create({
         data: {
           name,
           imageSrc,
+          imageAlt,
+          imageHeight,
+          imageWidth,
         },
       });
       // throw new Error("database error"); // // for testing only
