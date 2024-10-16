@@ -11,41 +11,62 @@ datasource db {
 }
 
 model Position {
-  id          String    @id @default(uuid())
-  name        String
-  imageSrc    String?
-  imageHeight Int?
-  imageWidth  Int?
-  imageAlt    String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime?
-  // offers Offer[]
+  id        String   @id @default(uuid())
+  name      String
+  image     String?
+  height    Int?
+  width     Int?
+  alt       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  offers    Offer[]
+  // W sumie image powinien być osobonym modelem, zagniedonym tutaj i w ofercie zeby mozna bylo dodac swoj obrazek 
 }
 
-// mode OfferList {
-
-// }
-
-// model Offer {
-//   id           Int      @id @default(autoincrement())
-//   createdAt    DateTime @default(now())
-//   updatedAt    DateTime @updatedAt
-//   internship   Boolean  @default(false)
-//   position     Position @relation(fields: [positionId], references: [id])
-//   positionId   Int
-//   published    Boolean  @default(false)
-//   description  String
-//   requirements String
-//   offer        String
-//   // contactPerson 
-// }
+model Offer {
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  active       Boolean       @default(false)
+  description  String
+  requirements String
+  offer        String
+  position     Position      @relation(fields: [positionId], references: [id])
+  positionId   String
+  applications Application[]
+  // validTo      DateTime
+  // contactPerson // tez to moglby byc model osobny
+  // salary - moze 2 integery - poczatek i koniec przedzialu
+  // typeOfWork full-time part-time intership
+  // dealer - stąd location
+}
 
 // model Dealer {
 //   id Int @id @default(autoincrement())
 // }
 
-// model Application {
-//   id        Int    @id @default(autoincrement())
-//   firstName String
-//   lastName  String
-// }
+model Person {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+}
+
+model Application {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  content       String
+  gdpr          Boolean
+  internalNotes String?
+  status        String   @default("sent")
+  // attachment(s) CV list motiwacyjny - najpierw jeden plik, nie szalejmy
+  Offer         Offer    @relation(fields: [offerId], references: [id])
+  offerId       Int
+}
