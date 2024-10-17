@@ -9,7 +9,7 @@ type Preview = {
   src: string | null;
   height: number | undefined;
   width: number | undefined;
-  name: string;
+  name?: string;
 };
 
 const INITIAL_PREVIEW: Preview = {
@@ -110,7 +110,7 @@ export default function ImageInput({
 
       {preview.src && (
         <div>
-          <figure>
+          <figure className={styles.previewWrapper}>
             <NextImage
               src={preview.src}
               className={styles.preview}
@@ -118,9 +118,11 @@ export default function ImageInput({
               height={preview.height}
               width={preview.width}
             />
-            <figcaption className={styles.info}>
-              Uploaded file: {preview.name}
-            </figcaption>
+            {preview.name && (
+              <figcaption className={styles.info}>
+                Uploaded file: {preview.name}
+              </figcaption>
+            )}
           </figure>
           <div className={styles.uploadButtons}>
             <button

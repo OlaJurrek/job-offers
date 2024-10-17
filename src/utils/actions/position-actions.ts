@@ -2,35 +2,38 @@
 import prisma from "@/utils/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { positionSchema } from "../validation/validations";
+import { UploadedPositionSchema } from "../definitions/position";
 import { saveFile } from "./actions-helpers";
 
 export type Response = {
   errors?: {
     name?: string[];
     image?: string[];
+    alt?: string[];
+    height?: string[];
+    width?: string[];
   };
   message?: string | null;
 };
 
 export async function createPosition(formData: FormData) {
   // Check if optional image is in the formData
-  let image: FormDataEntryValue | null = formData.get("image");
-  if (image === "null") {
-    image = null;
+  let uploadedImage: FormDataEntryValue | null = formData.get("image");
+  if (uploadedImage === "null") {
+    uploadedImage = null;
   }
 
   // Save image in uploads
-  let imageSrc: string = "";
-  if (image instanceof File) {
-    imageSrc = await saveFile(image);
+  let image: string = "";
+  if (uploadedImage instanceof File) {
+    image = await saveFile(uploadedImage);
   }
 
   // Validate the formData
-  const validatedFields = positionSchema.safeParse({
+  const validatedFields = UploadedPositionSchema.safeParse({
     name: formData.get("name"),
-    // image: formData.get("image"), // for testing server validation
-    image,
+    // uploadedImage: formData.get("image"), // for testing server validation
+    image: uploadedImage,
     alt: formData.get("alt"),
     height: formData.get("height"),
     width: formData.get("width"),
@@ -46,17 +49,17 @@ export async function createPosition(formData: FormData) {
   } else {
     // Send validated data to database
     const name = validatedFields.data.name;
-    const imageAlt = validatedFields.data.alt;
-    const imageHeight = Number(validatedFields.data.height);
-    const imageWidth = Number(validatedFields.data.width);
+    const alt = validatedFields.data.alt;
+    const height = Number(validatedFields.data.height);
+    const width = Number(validatedFields.data.width);
     try {
       await prisma.position.create({
         data: {
           name,
-          imageSrc,
-          imageAlt,
-          imageHeight,
-          imageWidth,
+          image,
+          alt,
+          height,
+          width,
         },
       });
       // throw new Error("database error"); // // for testing only

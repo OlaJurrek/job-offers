@@ -4,6 +4,7 @@ import { createPosition, Response } from "@/utils/actions/position-actions";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  PositionToEdit,
   UploadedPosition,
   UploadedPositionSchema,
 } from "@/utils/definitions/position";
@@ -12,15 +13,19 @@ import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
 import ImageInput from "@/ui/dashboard/forms/ImageInput";
 import styles from "./form.module.css";
 
-export default function CreatePositionForm() {
+export default function EditPositionForm({
+  position,
+}: {
+  position: PositionToEdit;
+}) {
   const methods = useForm({
     resolver: zodResolver(UploadedPositionSchema),
     defaultValues: {
-      name: "",
+      name: position.name,
       image: null,
-      alt: "",
-      height: "",
-      width: "",
+      alt: position.alt,
+      height: position.height,
+      width: position.width,
     },
   });
 
