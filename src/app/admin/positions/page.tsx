@@ -6,9 +6,8 @@ export default function PositionsPage() {
   return (
     <>
       <Headline variant="h1">Positions</Headline>
-      <Paper>
+      <Paper css={{ padding: "0 .5rem 1rem" }}>
         <PositionList />
-        hello
       </Paper>
     </>
   );

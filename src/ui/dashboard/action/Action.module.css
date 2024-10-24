@@ -1,0 +1,64 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  gap: 0.7rem;
+  padding: 0.4rem 0.5rem 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02rem;
+  white-space: nowrap;
+  border-radius: var(--borderRadius);
+  border: 1px solid transparent;
+  outline-offset: 5px;
+  vertical-align: middle;
+}
+
+.button::before {
+  --vertical-tap-increment: -2px;
+  --horizontal-tap-increment: -6px
+  content: '';
+  position: absolute;
+  top: var(--vertical-tap-increment);
+  left: var(--horizontal-tap-increment);
+  right: var(--horizontal-tap-increment);
+  bottom: var(--vertical-tap-increment);
+}
+
+.button svg {
+  width: 24px;
+}
+
+.primary {
+  background-color: var(--violet);
+  color: var(--white);
+  border-color: var(--violet);
+}
+
+.outline {
+  color: var(--violet-800);
+  background-color: var(--white);
+  border-color: var(--violet-800);
+}
+
+.secondary {
+  background-color: var(--violet-800);
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.danger {
+  background-color: var(--white);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.textOnly {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.labelWithBorder {
+  border-left: 1px solid currentColor;
+  padding-left: 0.8rem;
+}
