@@ -8,7 +8,7 @@ type HeadlineType = {
   variant: headlines;
   children: React.ReactNode;
 };
-export default function Headline({ level, children }: HeadlineType) {
+export default function BigText({ level, children }: HeadlineType) {
   const Tag = level ? level : "h1";
 
   return (

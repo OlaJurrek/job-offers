@@ -1,5 +1,5 @@
 import prisma from "@/utils/prisma";
-import Headline from "@/ui/dashboard/typography/Headline";
+import Headline from "@/ui/dashboard/typography/BigText";
 import EditPositionForm from "@/ui/dashboard/forms/EditPositionForm";
 import { PositionToEdit } from "@/utils/definitions/position";
 
