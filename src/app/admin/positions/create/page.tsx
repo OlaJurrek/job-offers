@@ -1,5 +1,5 @@
 import CreatePositionForm from "@/ui/dashboard/forms/CreatePositionForm";
-import Headline from "@/ui/dashboard/Typography/Headline";
+import Headline from "@/ui/dashboard/typography/Headline";
 
 export default function CreatePage() {
   return (
