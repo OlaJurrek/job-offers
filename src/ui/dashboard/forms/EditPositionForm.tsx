@@ -18,14 +18,13 @@ export default function EditPositionForm({
 }: {
   position: PositionToEdit;
 }) {
-  const defaultImageValue = position.image ? undefined : null;
   const [isImageChanged, setIsImageChanged] = React.useState(false);
 
   const methods = useForm({
     resolver: zodResolver(UploadedPositionSchema),
     defaultValues: {
       name: position.name,
-      image: defaultImageValue,
+      image: null,
       alt: position.alt,
       height: position.height,
       width: position.width,
@@ -53,7 +52,7 @@ export default function EditPositionForm({
   // console.log("position to edit", position);
   // console.log("edit errors", clientErrors);
 
-  console.log(methods.getValues());
+  console.log("values", methods.getValues());
 
   const isNameError = clientErrors.name || serverResponse.errors?.name;
   function handleImageChange() {
@@ -75,9 +74,15 @@ export default function EditPositionForm({
       formData.append("height", data.height.toString());
     }
     formData.append("alt", data.alt);
+    formData.append("name", data.name);
 
     // call the server action
-    const errorResponse = await updatePosition(position.id, formData);
+    const errorResponse = await updatePosition(
+      position.id,
+      isImageChanged,
+      position.image as string,
+      formData
+    );
 
     if (errorResponse) {
       setServerResponse(errorResponse);

@@ -16,18 +16,16 @@ export type Response = {
   message?: string | null;
 };
 
+// TODO sporo powtórzen kodu, mozna by moze zrobic refactoring i jakies funkcje pomocnicze wyodrebnic
+
 export async function createPosition(formData: FormData) {
   // Check if optional image is in the formData
   let uploadedImage: FormDataEntryValue | null = formData.get("image");
-  if (uploadedImage === "null") {
-    uploadedImage = null;
-  }
+  if (uploadedImage === "null") uploadedImage = null;
 
   // Save image in uploads
   let image: string = "";
-  if (uploadedImage instanceof File) {
-    image = await saveFile(uploadedImage);
-  }
+  if (uploadedImage instanceof File) image = await saveFile(uploadedImage);
 
   // Validate the formData
   const validatedFields = UploadedPositionSchema.safeParse({
@@ -50,8 +48,8 @@ export async function createPosition(formData: FormData) {
     // Send validated data to database
     const name = validatedFields.data.name;
     const alt = validatedFields.data.alt;
-    const height = Number(validatedFields.data.height);
-    const width = Number(validatedFields.data.width);
+    const height = validatedFields.data.height;
+    const width = validatedFields.data.width;
     try {
       await prisma.position.create({
         data: {
@@ -77,18 +75,23 @@ export async function createPosition(formData: FormData) {
   }
 }
 
-export async function updatePosition(id: string, formData: FormData) {
-  console.log("image? ", formData.has("image"), formData.get("image"));
-  // Check if optional image is in the formData
-  let uploadedImage: FormDataEntryValue | null = formData.get("image");
-  if (uploadedImage === "null") {
-    uploadedImage = null;
-  }
-
-  // Save image in uploads
+export async function updatePosition(
+  id: string,
+  isImageChanged: boolean,
+  oldImageSrc: string,
+  formData: FormData
+) {
+  // Handle operation on images
   let image: string = "";
-  if (uploadedImage instanceof File) {
-    image = await saveFile(uploadedImage);
+  let uploadedImage: FormDataEntryValue | null = null;
+
+  if (!isImageChanged) {
+    image = oldImageSrc;
+  } else {
+    deleteFile(oldImageSrc);
+    uploadedImage = formData.get("image");
+    if (uploadedImage === "null") uploadedImage = null;
+    if (uploadedImage instanceof File) image = await saveFile(uploadedImage);
   }
 
   // Validate the formData
@@ -106,16 +109,24 @@ export async function updatePosition(id: string, formData: FormData) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message:
-        "Failed to create position. See individual fields errors for further instructions.",
+        "Failed to update position. See individual fields errors for further instructions.",
     };
   } else {
     // Send validated data to database
     const name = validatedFields.data.name;
     const alt = validatedFields.data.alt;
-    const height = Number(validatedFields.data.height);
-    const width = Number(validatedFields.data.width);
+    const height = validatedFields.data.height;
+    const width = validatedFields.data.width;
+    console.log(
+      "type of height",
+      typeof validatedFields.data.height,
+      validatedFields.data.height
+    );
     try {
-      await prisma.position.create({
+      const updatedPosition = await prisma.position.update({
+        where: {
+          id: id,
+        },
         data: {
           name,
           image,
@@ -124,12 +135,16 @@ export async function updatePosition(id: string, formData: FormData) {
           width,
         },
       });
+
+      console.log("updatedPosition", updatedPosition);
+      // TODO Moze wyswietlic toast, ze position has been successfully updated
+
       // throw new Error("database error"); // // for testing only
     } catch (error) {
       // If a database error occurs, return a more specific error.
       console.error("error", error);
       return {
-        message: "Failed to create position. A database error occured.",
+        message: "Failed to update position. A database error occured.",
       };
     }
     // Revalidate the cache for the positions pages and redirect the user.
