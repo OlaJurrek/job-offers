@@ -38,7 +38,6 @@ export default function CreatePositionForm() {
   const isNameError = clientErrors.name || serverResponse.errors?.name;
 
   const onSubmitForm: SubmitHandler<UploadedPosition> = async (data) => {
-    // console.log(data);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("image", data.image as File);
@@ -48,8 +47,6 @@ export default function CreatePositionForm() {
 
     // call the server action
     const errorResponse = await createPosition(formData);
-
-    // console.log("errorResponse", errorResponse);
 
     if (errorResponse) {
       setServerResponse(errorResponse);

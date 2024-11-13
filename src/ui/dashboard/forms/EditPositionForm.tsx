@@ -49,20 +49,12 @@ export default function EditPositionForm({
     name: "",
   };
 
-  // console.log("position to edit", position);
-  // console.log("edit errors", clientErrors);
-
-  console.log("values", methods.getValues());
-
   const isNameError = clientErrors.name || serverResponse.errors?.name;
   function handleImageChange() {
-    console.log("its me", isImageChanged);
     setIsImageChanged(true);
   }
 
   const onSubmitForm: SubmitHandler<UploadedPosition> = async (data) => {
-    console.log("isImageChanged", isImageChanged);
-    // console.log("aaaaa", data);
     const formData = new FormData();
     // formData.append("changeImage", data.name);
 

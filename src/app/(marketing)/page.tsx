@@ -4,8 +4,6 @@ import Image from "next/image";
 export default async function Home() {
   const positions = await prisma.position.findMany();
 
-  console.log(positions);
-
   return (
     <div>
       Home - Positions - (public)
@@ -13,12 +11,12 @@ export default async function Home() {
         {positions.map((position) => (
           <li key={position.id}>
             <div>{position.name}</div>
-            {position.imageSrc && (
+            {position.image && (
               <div>
                 {" "}
                 <Image
-                  key={position.imageSrc}
-                  src={position.imageSrc}
+                  key={position.image}
+                  src={position.image}
                   width={670}
                   height={337}
                   alt="nic"

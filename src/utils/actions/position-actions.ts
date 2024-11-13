@@ -117,11 +117,6 @@ export async function updatePosition(
     const alt = validatedFields.data.alt;
     const height = validatedFields.data.height;
     const width = validatedFields.data.width;
-    console.log(
-      "type of height",
-      typeof validatedFields.data.height,
-      validatedFields.data.height
-    );
     try {
       const updatedPosition = await prisma.position.update({
         where: {
