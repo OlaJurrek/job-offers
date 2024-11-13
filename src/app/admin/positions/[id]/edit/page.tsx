@@ -16,11 +16,10 @@ export default async function EditPositionPage({
 
   if (!position) {
     // TODO better display errors and loading states
-    return <>Loading data...</>
+    return <>Loading data...</>;
   }
 
-
- const positionToEdit: PositionToEdit = {
+  const positionToEdit: PositionToEdit = {
     id: position.id || "",
     name: position.name || "",
     image: position.image,
@@ -28,7 +27,6 @@ export default async function EditPositionPage({
     width: position.width || 0,
     height: position.height || 0,
   };
-  
 
   return (
     <>
