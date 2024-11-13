@@ -9,11 +9,12 @@ type HeadlineType = {
   children: React.ReactNode;
 };
 export default function Headline({ level, children }: HeadlineType) {
-  const Tag = level ? level : "h1";
+  // const Tag = level ? level : "h1";
+  console.log(level);
 
   return (
-    <Tag className={`${kanit.className} ${styles.basic} ${styles.variant}`}>
+    <h1 className={`${kanit.className} ${styles.basic} ${styles.variant}`}>
       {children}
-    </Tag>
+    </h1>
   );
 }
