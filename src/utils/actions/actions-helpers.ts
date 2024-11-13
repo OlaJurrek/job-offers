@@ -4,15 +4,29 @@ import crypto from "node:crypto";
 export async function saveFile(file: File) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = new Uint8Array(arrayBuffer);
-  const hex = createHashFromBuffer(buffer);
+  const uuid = crypto.randomUUID();
   const extension = file.name.split(".")[1];
-  const filePath = `./public/uploads/${hex}.${extension}`;
+  const filePath = `./public/uploads/${uuid}.${extension}`;
   await fs.writeFile(filePath, buffer);
-  return `/uploads/${hex}.${extension}`;
+  return `/uploads/${uuid}.${extension}`;
 }
 
-function createHashFromBuffer(buffer: Uint8Array) {
-  const hashSum = crypto.createHash("sha256");
-  hashSum.update(buffer);
-  return hashSum.digest("hex");
+export async function deleteFile(imageSrc: string) {
+  if (!imageSrc) {
+    return;
+  }
+
+  const path = `./public${imageSrc}`;
+  const stats = await fs.stat(path);
+
+  if (!stats.isFile()) {
+    return;
+  }
+
+  try {
+    fs.unlink(path);
+  } catch (error) {
+    console.log("err", error);
+    // TODO Toast nie mozna usunac pliku
+  }
 }

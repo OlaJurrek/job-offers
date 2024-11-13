@@ -12,6 +12,7 @@
   border: 1px solid transparent;
   outline-offset: 5px;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .button::before {

@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import { createPosition, Response } from "@/utils/actions/position-actions";
+import { updatePosition, Response } from "@/utils/actions/position-actions";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   PositionToEdit,
-  UploadedPosition,
   UploadedPositionSchema,
+  UploadedPosition,
 } from "@/utils/definitions/position";
 import Link from "next/link";
 import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
@@ -18,11 +18,14 @@ export default function EditPositionForm({
 }: {
   position: PositionToEdit;
 }) {
+  const defaultImageValue = position.image ? undefined : null;
+  const [isImageChanged, setIsImageChanged] = React.useState(false);
+
   const methods = useForm({
     resolver: zodResolver(UploadedPositionSchema),
     defaultValues: {
       name: position.name,
-      image: null,
+      image: defaultImageValue,
       alt: position.alt,
       height: position.height,
       width: position.width,
@@ -40,19 +43,41 @@ export default function EditPositionForm({
     errors: {},
   });
 
+  const initialPreview = {
+    src: position.image,
+    height: position.height,
+    width: position.width,
+    name: "",
+  };
+
+  // console.log("position to edit", position);
+  // console.log("edit errors", clientErrors);
+
+  console.log(methods.getValues());
+
   const isNameError = clientErrors.name || serverResponse.errors?.name;
+  function handleImageChange() {
+    console.log("its me", isImageChanged);
+    setIsImageChanged(true);
+  }
 
   const onSubmitForm: SubmitHandler<UploadedPosition> = async (data) => {
-    console.log(data);
+    console.log("isImageChanged", isImageChanged);
+    // console.log("aaaaa", data);
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("image", data.image as File);
+    // formData.append("changeImage", data.name);
+
+    // if (data.image !== undefined) {
+    // file input value has changed
+    if (isImageChanged) {
+      formData.append("image", data.image as File);
+      formData.append("width", data.width.toString());
+      formData.append("height", data.height.toString());
+    }
     formData.append("alt", data.alt);
-    formData.append("width", data.width);
-    formData.append("height", data.height);
 
     // call the server action
-    const errorResponse = await createPosition(formData);
+    const errorResponse = await updatePosition(position.id, formData);
 
     if (errorResponse) {
       setServerResponse(errorResponse);
@@ -104,6 +129,9 @@ export default function EditPositionForm({
             clientError={clientErrors.image?.message}
             heightInput="height"
             widthInput="width"
+            initialPreview={initialPreview}
+            handleImageChange={handleImageChange}
+            isImageChanged={isImageChanged}
           />
           {/*  Image alt */}
           {/* <div className={styles.field}>
@@ -121,7 +149,7 @@ export default function EditPositionForm({
             className={`${styles.button} ${styles.primary}`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting" : "Create Position"}
+            {isSubmitting ? "Submitting" : "Edit Position"}
           </button>
         </div>
       </form>

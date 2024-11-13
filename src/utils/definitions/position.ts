@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Offer } from "./offer";
+// import { Offer } from "./offer";
 
 // Define the file size limit and accepted file types as constants
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
@@ -14,8 +14,8 @@ const ACCEPTED_IMAGE_TYPES = [
 const CommonPostion = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   alt: z.string(),
-  height: z.string(),
-  width: z.string(),
+  height: z.number(),
+  width: z.number(),
 });
 
 export const UploadedPositionSchema = CommonPostion.extend({
@@ -46,7 +46,6 @@ export const PositionSchema = CommonPostion.extend({
 });
 
 export const PositionToEditSchema = PositionSchema.omit({
-  id: true,
   createdAt: true,
   updatedAt: true,
 });
@@ -56,5 +55,5 @@ export type PositionToEdit = z.infer<typeof PositionToEditSchema>;
 type PositionWithoutOffers = z.infer<typeof PositionSchema>;
 
 export type Position = PositionWithoutOffers & {
-  offers: Offer[];
+  // offers: Offer[];
 };

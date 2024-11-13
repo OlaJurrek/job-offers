@@ -6,13 +6,13 @@ import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
 import styles from "./form.module.css";
 
 type Preview = {
-  src: string | null;
+  src: string | null | undefined;
   height: number | undefined;
   width: number | undefined;
   name?: string;
 };
 
-const INITIAL_PREVIEW: Preview = {
+const EMPTY_PREVIEW: Preview = {
   src: null,
   height: undefined,
   width: undefined,
@@ -27,6 +27,9 @@ type ImageInputProps = {
   clientError: string | undefined;
   serverError: string[] | undefined;
   formats?: string;
+  initialPreview?: Preview;
+  handleImageChange: () => void;
+  isImageChanged?: boolean;
 };
 
 export default function ImageInput({
@@ -37,9 +40,15 @@ export default function ImageInput({
   clientError,
   serverError,
   formats = "image/jpeg,image/png,image/avif,image/svg+xml,image/webp",
+  initialPreview,
+  handleImageChange,
+  isImageChanged,
 }: ImageInputProps) {
   const { register, setValue, trigger } = useFormContext();
-  const [preview, setPreview] = React.useState<Preview>(INITIAL_PREVIEW);
+  const [preview, setPreview] = React.useState<Preview>(
+    initialPreview || EMPTY_PREVIEW
+  );
+  // const [] = React.useState()
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const heightInputRef = React.useRef<HTMLInputElement | null>(null);
   const widthInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -67,26 +76,32 @@ export default function ImageInput({
             width,
             name: file.name,
           });
-          setValue(heightInput, height.toString());
-          setValue(widthInput, width.toString());
+          setValue(heightInput, height);
+          setValue(widthInput, width);
         };
         setValue(imageInput, file); // manually set the image in the form state
         trigger(imageInput);
       };
 
       reader.readAsDataURL(file);
+      if (!isImageChanged) {
+        handleImageChange();
+      }
     } else {
-      setPreview(INITIAL_PREVIEW);
+      setPreview(EMPTY_PREVIEW);
     }
   };
 
   const removeImage = () => {
-    setPreview(INITIAL_PREVIEW);
+    setPreview(EMPTY_PREVIEW);
     fileInputRef.current!.value = "";
     setValue(imageInput, null);
-    setValue(heightInput, "");
-    setValue(widthInput, "");
+    setValue(heightInput, 0);
+    setValue(widthInput, 0);
     trigger(imageInput);
+    if (!isImageChanged) {
+      handleImageChange();
+    }
   };
 
   return (
@@ -109,7 +124,7 @@ export default function ImageInput({
       )}
 
       {preview.src && (
-        <div>
+        <>
           <figure className={styles.previewWrapper}>
             <NextImage
               src={preview.src}
@@ -117,6 +132,7 @@ export default function ImageInput({
               alt=""
               height={preview.height}
               width={preview.width}
+              priority={true}
             />
             {preview.name && (
               <figcaption className={styles.info}>
@@ -141,7 +157,7 @@ export default function ImageInput({
               Remove Image
             </button>
           </div>
-        </div>
+        </>
       )}
       <input
         {...register(imageInput)}
@@ -171,14 +187,14 @@ export default function ImageInput({
       <input
         {...register(heightInput)}
         className="visually-hidden"
-        type="text"
+        type="number"
         aria-hidden="true"
         ref={heightInputRef}
       />
       <input
         {...register(widthInput)}
         className="visually-hidden"
-        type="text"
+        type="number"
         aria-hidden="true"
         ref={widthInputRef}
       />

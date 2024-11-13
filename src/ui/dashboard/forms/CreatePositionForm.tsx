@@ -19,8 +19,8 @@ export default function CreatePositionForm() {
       name: "",
       image: null,
       alt: "",
-      height: "",
-      width: "",
+      height: 0,
+      width: 0,
     },
   });
 
@@ -38,16 +38,18 @@ export default function CreatePositionForm() {
   const isNameError = clientErrors.name || serverResponse.errors?.name;
 
   const onSubmitForm: SubmitHandler<UploadedPosition> = async (data) => {
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("image", data.image as File);
     formData.append("alt", data.alt);
-    formData.append("width", data.width);
-    formData.append("height", data.height);
+    formData.append("width", data.width.toString());
+    formData.append("height", data.height.toString());
 
     // call the server action
     const errorResponse = await createPosition(formData);
+
+    // console.log("errorResponse", errorResponse);
 
     if (errorResponse) {
       setServerResponse(errorResponse);

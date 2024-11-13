@@ -13,10 +13,10 @@ datasource db {
 model Position {
   id        String   @id @default(uuid())
   name      String
-  image     String?
-  height    Int?
-  width     Int?
-  alt       String?
+  image     String
+  height    Int
+  width     Int
+  alt       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   offers    Offer[]
