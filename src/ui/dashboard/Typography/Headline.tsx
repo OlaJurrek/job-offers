@@ -1,4 +1,4 @@
-import styles from "./Headline.module.css";
+import styles from "@/ui/dashboard/typography/typography.module.css";
 import { kanit } from "@/ui/fonts";
 
 type headlines = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -9,12 +9,11 @@ type HeadlineType = {
   children: React.ReactNode;
 };
 export default function Headline({ level, children }: HeadlineType) {
-  // const Tag = level ? level : "h1";
-  console.log(level);
+  const Tag = level ? level : "h1";
 
   return (
-    <h1 className={`${kanit.className} ${styles.basic} ${styles.variant}`}>
+    <Tag className={`${kanit.className} ${styles.basic} ${styles.variant}`}>
       {children}
-    </h1>
+    </Tag>
   );
 }
