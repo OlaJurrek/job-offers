@@ -14,25 +14,26 @@ export default async function EditPositionPage({
     },
   });
 
-  // let positionToEdit: PositionToEdit;
+  if (!position) {
+    // TODO better display errors and loading states
+    return <>Loading data...</>
+  }
 
-  // if (position) {
-  const positionToEdit: PositionToEdit = {
-    id: position?.id || "",
-    name: position?.name || "",
-    image: position?.image,
-    alt: position?.alt || "",
-    width: position?.width || 0,
-    height: position?.height || 0,
+
+ const positionToEdit: PositionToEdit = {
+    id: position.id || "",
+    name: position.name || "",
+    image: position.image,
+    alt: position.alt || "",
+    width: position.width || 0,
+    height: position.height || 0,
   };
-  // }
+  
 
-  console.log("edit me", positionToEdit);
   return (
     <>
       <Headline variant="h1">Edit Position</Headline>
-      {/* TODO: Edit Form here */}
-      {position && <EditPositionForm position={positionToEdit} />}
+      {positionToEdit && <EditPositionForm position={positionToEdit} />}
     </>
   );
 }
