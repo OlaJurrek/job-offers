@@ -28,7 +28,7 @@ type ImageInputProps = {
   serverError: string[] | undefined;
   formats?: string;
   initialPreview?: Preview;
-  handleImageChange: () => void;
+  handleImageChange?: () => void;
   isImageChanged?: boolean;
 };
 
@@ -84,7 +84,7 @@ export default function ImageInput({
       };
 
       reader.readAsDataURL(file);
-      if (!isImageChanged) {
+      if (!isImageChanged && handleImageChange) {
         handleImageChange();
       }
     } else {
@@ -99,7 +99,7 @@ export default function ImageInput({
     setValue(heightInput, 0);
     setValue(widthInput, 0);
     trigger(imageInput);
-    if (!isImageChanged) {
+    if (!isImageChanged && handleImageChange) {
       handleImageChange();
     }
   };
