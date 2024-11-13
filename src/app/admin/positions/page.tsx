@@ -1,4 +1,4 @@
-import Headline from "@/ui/dashboard/typography/Headline";
+import Headline from "@/ui/dashboard/Typography/Headline";
 import PositionList from "@/ui/dashboard/positions/PositionList";
 import InnerNav from "@/ui/dashboard/navigation/InnerNav/InnerNav";
 
