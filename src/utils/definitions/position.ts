@@ -32,8 +32,7 @@ export const UploadedPositionSchema = CommonPostion.extend({
         ", "
       )}.`
     )
-    .optional()
-    .nullish(),
+    .nullable(),
 });
 
 export type UploadedPosition = z.infer<typeof UploadedPositionSchema>;
@@ -42,7 +41,7 @@ export const PositionSchema = CommonPostion.extend({
   id: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-  image: z.string().nullish(),
+  image: z.string().nullable(),
 });
 
 export const PositionToEditSchema = PositionSchema.omit({

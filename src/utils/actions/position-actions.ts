@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { UploadedPositionSchema } from "../definitions/position";
 import { saveFile, deleteFile } from "./actions-helpers";
 
+type UploadedImage = FormDataEntryValue | null;
+
 export type Response = {
   errors?: {
     name?: string[];
@@ -16,11 +18,9 @@ export type Response = {
   message?: string | null;
 };
 
-// TODO sporo powtórzen kodu, mozna by moze zrobic refactoring i jakies funkcje pomocnicze wyodrebnic
-
 export async function createPosition(formData: FormData) {
   // Check if optional image is in the formData
-  let uploadedImage: FormDataEntryValue | null = formData.get("image");
+  let uploadedImage: UploadedImage = formData.get("image");
   if (uploadedImage === "null") uploadedImage = null;
 
   // Save image in uploads
@@ -28,14 +28,7 @@ export async function createPosition(formData: FormData) {
   if (uploadedImage instanceof File) image = await saveFile(uploadedImage);
 
   // Validate the formData
-  const validatedFields = UploadedPositionSchema.safeParse({
-    name: formData.get("name"),
-    // uploadedImage: formData.get("image"), // for testing server validation
-    image: uploadedImage,
-    alt: formData.get("alt"),
-    height: Number(formData.get("height")),
-    width: Number(formData.get("width")),
-  });
+  const validatedFields = validatePosition(formData, uploadedImage);
 
   if (!validatedFields.success) {
     // Handle validation errors
@@ -46,10 +39,7 @@ export async function createPosition(formData: FormData) {
     };
   } else {
     // Send validated data to database
-    const name = validatedFields.data.name;
-    const alt = validatedFields.data.alt;
-    const height = validatedFields.data.height;
-    const width = validatedFields.data.width;
+    const { name, alt, height, width } = validatedFields.data;
     try {
       await prisma.position.create({
         data: {
@@ -83,7 +73,7 @@ export async function updatePosition(
 ) {
   // Handle operation on images
   let image: string = "";
-  let uploadedImage: FormDataEntryValue | null = null;
+  let uploadedImage: UploadedImage = null;
 
   if (!isImageChanged) {
     image = oldImageSrc;
@@ -95,14 +85,7 @@ export async function updatePosition(
   }
 
   // Validate the formData
-  const validatedFields = UploadedPositionSchema.safeParse({
-    name: formData.get("name"),
-    // image: formData.get("image"), // for testing server validation
-    image: uploadedImage,
-    alt: formData.get("alt"),
-    height: Number(formData.get("height")),
-    width: Number(formData.get("width")),
-  });
+  const validatedFields = validatePosition(formData, uploadedImage);
 
   if (!validatedFields.success) {
     // Handle validation errors
@@ -113,12 +96,9 @@ export async function updatePosition(
     };
   } else {
     // Send validated data to database
-    const name = validatedFields.data.name;
-    const alt = validatedFields.data.alt;
-    const height = validatedFields.data.height;
-    const width = validatedFields.data.width;
+    const { name, alt, height, width } = validatedFields.data;
     try {
-      const updatedPosition = await prisma.position.update({
+      await prisma.position.update({
         where: {
           id: id,
         },
@@ -130,9 +110,7 @@ export async function updatePosition(
           width,
         },
       });
-
-      console.log("updatedPosition", updatedPosition);
-      // TODO Moze wyswietlic toast, ze position has been successfully updated
+      // TODO Moze wyswietlic toast, ze position has been successfully updated i jakie updatedPosition
 
       // throw new Error("database error"); // // for testing only
     } catch (error) {
@@ -168,4 +146,15 @@ export async function deletePosition(id: string, imageSrc: string) {
     console.warn(error);
     return { message: "Database Error: Failed to Delete Invoice." };
   }
+}
+
+function validatePosition(formData: FormData, uploadedImage: UploadedImage) {
+  return UploadedPositionSchema.safeParse({
+    name: formData.get("name"),
+    // image: formData.get("image"), // for testing server validation
+    image: uploadedImage,
+    alt: formData.get("alt"),
+    height: Number(formData.get("height")),
+    width: Number(formData.get("width")),
+  });
 }
