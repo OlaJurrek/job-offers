@@ -2,13 +2,13 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   border-radius: 16px;
   color: black;
   color-scheme: light;
   background: white;
   max-width: 100%;
-  width: 350px;
+  width: 370px;
   box-shadow: var(--shadow-elevation-medium);
 }
 
@@ -16,6 +16,7 @@
   flex: 1;
   padding: 12px 0px;
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .iconContainer {
@@ -33,6 +34,7 @@
   background: transparent;
   padding: 16px;
   cursor: pointer;
+  color: black;
 }
 
 .notice {

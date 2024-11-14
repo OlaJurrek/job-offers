@@ -11,6 +11,8 @@ import {
 import Link from "next/link";
 import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
 import ImageInput from "@/ui/dashboard/forms/ImageInput";
+import { ToastContext } from "@/ui/toast/ToastProvider";
+import { ToastContextType } from "@/ui/toast/toast-types";
 import styles from "./form.module.css";
 
 export default function EditPositionForm({
@@ -18,6 +20,7 @@ export default function EditPositionForm({
 }: {
   position: PositionToEdit;
 }) {
+  const { createToast } = React.useContext(ToastContext) as ToastContextType;
   const [isImageChanged, setIsImageChanged] = React.useState(false);
 
   const methods = useForm({
@@ -78,6 +81,10 @@ export default function EditPositionForm({
 
     if (errorResponse) {
       setServerResponse(errorResponse);
+    } else {
+      if (createToast) {
+        createToast(`Position ${data.name} has been updated`, "success");
+      }
     }
   };
 

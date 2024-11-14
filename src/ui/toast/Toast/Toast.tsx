@@ -33,7 +33,7 @@ export default function Toast({ id, variant, children }: ToastProps) {
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
-        <Icon />
+        <Icon width={24} />
       </div>
       <p className={styles.content}>
         <span className="visually-hidden">{variant} -</span>
@@ -45,7 +45,7 @@ export default function Toast({ id, variant, children }: ToastProps) {
         aria-label="Dismiss message"
         aria-live="off"
       >
-        <XMarkIcon />
+        <XMarkIcon width={24} />
       </button>
     </div>
   );

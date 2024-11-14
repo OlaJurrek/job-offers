@@ -10,9 +10,13 @@ import {
 import Link from "next/link";
 import ErrorMessage from "@/ui/dashboard/forms/ErrorMessage";
 import ImageInput from "@/ui/dashboard/forms/ImageInput";
+import { ToastContext } from "@/ui/toast/ToastProvider";
+import { ToastContextType } from "@/ui/toast/toast-types";
+
 import styles from "./form.module.css";
 
 export default function CreatePositionForm() {
+  const { createToast } = React.useContext(ToastContext) as ToastContextType;
   const methods = useForm({
     resolver: zodResolver(UploadedPositionSchema),
     defaultValues: {
@@ -50,6 +54,10 @@ export default function CreatePositionForm() {
 
     if (errorResponse) {
       setServerResponse(errorResponse);
+    } else {
+      if (createToast) {
+        createToast(`Position ${data.name} has been created`, "success");
+      }
     }
   };
 
