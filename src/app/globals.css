@@ -11,6 +11,23 @@
   --light: #f8f7f8;
   --white: #faf9f6;
   --borderRadius: 0.375rem;
+
+  /* prettier-ignore */
+  --shadow-elevation-medium:
+    0px 0.3px 0.6px hsl(var(--shadow-color) / 0.2),
+    0px 0.7px 1.4px -1.1px hsl(var(--shadow-color) / 0.19),
+    0px 1.5px 3.7px -2.1px hsl(var(--shadow-color) / 0.18),
+    0.1px 4px 9.2px -3.2px hsl(var(--shadow-color) / 0.17),
+    0.2px 6px 15px -2.3px hsl(var(--shadow-color) / 0.16);
+
+  --color-notice: hsl(235deg 100% 50%);
+  --color-notice-bg: hsl(235deg 0% 100%);
+  --color-warning: hsl(35deg 100% 46%);
+  --color-warning-bg: hsl(40deg 100% 94%);
+  --color-success: hsl(120deg 80% 35%);
+  --color-success-bg: hsl(120deg 90% 96%);
+  --color-error: hsl(345deg 100% 50%);
+  --color-error-bg: hsl(350deg 90% 96%);
 }
 
 *,
