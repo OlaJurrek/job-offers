@@ -55,7 +55,7 @@ export async function createPosition(formData: FormData) {
       // If a database error occurs, return a more specific error.
       console.error("error", error);
       return {
-        message: "Failed to create position. A database error occured.",
+        message: `Failed to create position. A database error occured: ${error}`,
       };
     }
     // Revalidate the cache for the positions pages and redirect the user.
@@ -88,7 +88,6 @@ export async function updatePosition(
   const validatedFields = validatePosition(formData, uploadedImage);
 
   if (!validatedFields.success) {
-    // Handle validation errors
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message:
@@ -110,7 +109,6 @@ export async function updatePosition(
           width,
         },
       });
-      // TODO Moze wyswietlic toast, ze position has been successfully updated i jakie updatedPosition
 
       // throw new Error("database error"); // // for testing only
     } catch (error) {
