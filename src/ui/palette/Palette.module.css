@@ -1,0 +1,103 @@
+.colorBox {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.colors {
+  margin-top: 1rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.color {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid grey;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 25px;
+  color: #fff;
+  border: none;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.button:nth-child(1) {
+  background-color: var(--primary-500);
+}
+
+.button:nth-child(2) {
+  background-color: var(--primary-600);
+}
+
+.button:nth-child(3) {
+  background-color: var(--primary-700);
+}
+
+/* Primary  */
+.primary .color:nth-child(1) {
+  background-color: var(--primary-100);
+}
+.primary .color:nth-child(2) {
+  background-color: var(--primary-200);
+}
+.primary .color:nth-child(3) {
+  background-color: var(--primary-300);
+}
+.primary .color:nth-child(4) {
+  background-color: var(--primary-400);
+}
+.primary .color:nth-child(5) {
+  background-color: var(--primary-500);
+}
+.primary .color:nth-child(6) {
+  background-color: var(--primary-600);
+}
+.primary .color:nth-child(7) {
+  background-color: var(--primary-700);
+}
+.primary .color:nth-child(8) {
+  background-color: var(--primary-800);
+}
+.primary .color:nth-child(9) {
+  background-color: var(--primary-900);
+}
+
+/* Accent */
+
+.accent .color:nth-child(1) {
+  background-color: var(--accent-100);
+}
+.accent .color:nth-child(2) {
+  background-color: var(--accent-200);
+}
+.accent .color:nth-child(3) {
+  background-color: var(--accent-300);
+}
+.accent .color:nth-child(4) {
+  background-color: var(--accent-400);
+}
+.accent .color:nth-child(5) {
+  background-color: var(--accent-500);
+}
+.accent .color:nth-child(6) {
+  background-color: var(--accent-600);
+}
+.accent .color:nth-child(7) {
+  background-color: var(--accent-700);
+}
+.accent .color:nth-child(8) {
+  background-color: var(--accent-800);
+}
+.accent .color:nth-child(9) {
+  background-color: var(--accent-900);
+}

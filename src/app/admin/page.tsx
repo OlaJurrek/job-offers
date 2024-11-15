@@ -1,3 +1,5 @@
+import Palette from "@/ui/palette/Palette";
+
 export default function Admin() {
-  return <div>Admin Page</div>;
+  return <Palette />;
 }

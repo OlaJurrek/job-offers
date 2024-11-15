@@ -1,4 +1,20 @@
 :root {
+  --primary-100: hsl(200, 100%, 96%);
+  --primary-200: hsl(201, 100%, 92%);
+  --primary-300: hsl(198, 100%, 77%);
+  --primary-400: hsl(205, 100%, 58%);
+  --primary-500: #1f8fff;
+  --primary-600: hsl(213, 92%, 48%);
+  --primary-700: hsl(214, 85%, 40%);
+  --primary-800: hsl(213, 77%, 33%);
+  --primary-900: hsl(215, 68%, 21%);
+
+  --accent-400: #fff;
+  --accent-500: hsl(175, 85%, 69%);
+  --accent-600: #fff;
+  --accent-700: #40d2c6;
+  --accent-800: #fff;
+
   --violet: #7b10c1;
   --violet-100: #f1d6f1;
   --violet-300: #9778a8;
