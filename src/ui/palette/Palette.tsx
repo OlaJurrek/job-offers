@@ -7,6 +7,14 @@ export default function Palette() {
       <button className={styles.button}>Check my BG</button>
       <button className={styles.button}>Check my BG</button>
 
+      <div className={styles.card}>
+        <p className={styles.mainText}>This is main text</p>
+        <p className={styles.secondaryText}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+          excepturi
+        </p>
+      </div>
+
       <div className={styles.colorBox}>
         <h1 className={styles.title}>Primary</h1>
         <div className={`${styles.colors} ${styles.primary}`}>
@@ -79,7 +87,7 @@ export default function Palette() {
       </div>
       <div className={styles.colorBox}>
         <h1 className={styles.title}>Greys</h1>
-        <div className={`${styles.colors} ${styles.grey}`}>
+        <div className={`${styles.colors} ${styles.gray}`}>
           <div className={styles.color}></div>
           <div className={styles.color}></div>
           <div className={styles.color}></div>

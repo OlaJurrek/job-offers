@@ -1,19 +1,64 @@
 :root {
-  --primary-100: hsl(200, 100%, 96%);
-  --primary-200: hsl(201, 100%, 92%);
-  --primary-300: hsl(198, 100%, 77%);
-  --primary-400: hsl(205, 100%, 58%);
-  --primary-500: #1f8fff;
-  --primary-600: hsl(213, 92%, 48%);
-  --primary-700: hsl(214, 85%, 40%);
-  --primary-800: hsl(213, 77%, 33%);
-  --primary-900: hsl(215, 68%, 21%);
+  /* Colors */
+  --primary-100: hsl(227, 83%, 98%);
+  --primary-200: hsl(227, 86%, 95%);
+  --primary-300: hsl(228, 90%, 78%);
+  --primary-400: hsl(228, 84%, 67%);
+  --primary-500: #2e54ea;
+  --primary-600: hsl(228, 67%, 49%);
+  --primary-700: hsl(228, 67%, 44%);
+  --primary-800: hsl(228, 67%, 33%);
+  --primary-900: hsl(227, 68%, 22%);
 
+  --accent-100: #fff;
+  --accent-200: #fff;
+  --accent-300: #fff;
   --accent-400: #fff;
   --accent-500: hsl(175, 85%, 69%);
   --accent-600: #fff;
   --accent-700: #40d2c6;
   --accent-800: #fff;
+  --accent-900: #fff;
+
+  --gray-100: hsl(220, 40%, 99%);
+  --gray-200: hsl(228, 20%, 92%);
+  --gray-300: hsl(228, 22%, 80%);
+  --gray-400: hsl(228, 20%, 70%);
+  --gray-500: hsl(228, 12%, 50%);
+  --gray-600: hsl(228, 17%, 40%);
+  --gray-700: hsl(228, 13%, 35%);
+  --gray-800: hsl(228, 15%, 28%);
+  --gray-900: hsl(228, 15%, 20%);
+
+  --red-100: hsl(349, 80%, 96%);
+  --red-200: hsl(347, 92%, 89%);
+  --red-300: hsl(349, 100%, 80%);
+  --red-400: hsl(349, 100%, 70%);
+  --red-500: hsl(347, 82%, 55%);
+  --red-600: hsl(349, 100%, 42%);
+  --red-700: hsl(349, 100%, 35%);
+  --red-800: hsl(351, 100%, 30%);
+  --red-900: hsl(353, 100%, 25%);
+
+  --green-100: hsl(170, 56%, 95%);
+  --green-200: hsl(170, 76%, 85%);
+  --green-300: hsl(170, 66%, 70%);
+  --green-400: hsl(170, 56%, 56%);
+  --green-500: hsl(170, 56%, 41%);
+  --green-600: hsl(170, 56%, 37%);
+  --green-700: hsl(170, 56%, 30%);
+  --green-800: hsl(170, 56%, 25%);
+  --green-900: hsl(170, 56%, 20%);
+
+  --yellow-100: yellow;
+  --yellow-200: yellow;
+  --yellow-300: yellow;
+  --yellow-400: yellow;
+  --yellow-500: yellow;
+  --yellow-600: yellow;
+  --yellow-700: yellow;
+  --yellow-800: yellow;
+  --yellow-900: yellow;
 
   --violet: #7b10c1;
   --violet-100: #f1d6f1;
