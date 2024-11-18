@@ -10,15 +10,35 @@
   --primary-800: hsl(228, 67%, 33%);
   --primary-900: hsl(227, 68%, 22%);
 
-  --accent-100: #fff;
-  --accent-200: #fff;
-  --accent-300: #fff;
-  --accent-400: #fff;
+  --accent-100: hsl(175, 85%, 95%);
+  --accent-200: hsl(179, 80%, 90%);
+  --accent-300: hsl(178, 89%, 85%);
+  --accent-400: hsl(175, 82%, 78%);
   --accent-500: hsl(175, 85%, 69%);
-  --accent-600: #fff;
-  --accent-700: hsl(175, 62%, 54%);
-  --accent-800: #fff;
-  --accent-900: #fff;
+  --accent-600: hsl(175, 75%, 55%);
+  --accent-700: hsl(175, 82%, 44%);
+  --accent-800: hsl(175, 92%, 34%);
+  --accent-900: hsl(175, 85%, 25%);
+
+  /* --green-100: hsl(170, 56%, 95%);
+  --green-200: hsl(170, 76%, 85%);
+  --green-300: hsl(170, 66%, 70%);
+  --green-400: hsl(170, 56%, 56%);
+  --green-500: hsl(170, 56%, 41%);
+  --green-600: hsl(170, 56%, 37%);
+  --green-700: hsl(170, 56%, 30%);
+  --green-800: hsl(170, 56%, 25%);
+  --green-900: hsl(170, 56%, 20%); */
+
+  --green-100: hsl(161, 86%, 95%);
+  --green-200: hsl(161, 76%, 85%);
+  --green-300: hsl(161, 66%, 70%);
+  --green-400: hsl(161, 76%, 46%);
+  --green-500: hsl(161, 100%, 36%);
+  --green-600: hsl(161, 76%, 37%);
+  --green-700: hsl(161, 86%, 30%);
+  --green-800: hsl(161, 86%, 25%);
+  --green-900: hsl(161, 86%, 20%);
 
   --gray-100: hsl(220, 40%, 99%);
   --gray-200: hsl(228, 20%, 92%);
@@ -40,27 +60,15 @@
   --red-800: hsl(351, 100%, 30%);
   --red-900: hsl(353, 100%, 25%);
 
-  --green-100: hsl(170, 56%, 95%);
-  --green-200: hsl(170, 76%, 85%);
-  --green-300: hsl(170, 66%, 70%);
-  --green-400: hsl(170, 56%, 56%);
-  --green-500: hsl(170, 56%, 41%);
-  --green-600: hsl(170, 56%, 37%);
-  --green-700: hsl(170, 56%, 30%);
-  --green-800: hsl(170, 56%, 25%);
-  --green-900: hsl(170, 56%, 20%);
-
-  --yellow-100: hsl(39, 100%, 66%);
-  --yellow-200: hsl(35, 100%, 66%);
-  --yellow-300: yellow;
-  /* z tego hue zielone zrobic */
-  --yellow-400: hsl(161, 100%, 36%);
-  /* to chyba bedzie dobry start dla zoltych */
+  --yellow-100: hsl(50, 100%, 94%);
+  --yellow-200: hsl(50, 100%, 88%);
+  --yellow-300: hsl(50, 100%, 78%);
+  --yellow-400: hsl(47, 100%, 73%);
   --yellow-500: hsl(45, 100%, 61%);
-  --yellow-600: hsl(46, 100%, 66%);
-  --yellow-700: yellow;
-  --yellow-800: #fff;
-  --yellow-900: hsl(11, 100%, 70%);
+  --yellow-600: hsl(40, 100%, 50%);
+  --yellow-700: hsl(40, 100%, 40%);
+  --yellow-800: hsl(40, 100%, 30%);
+  --yellow-900: hsl(45, 100%, 15%);
 
   --violet: #7b10c1;
   --violet-100: #f1d6f1;
