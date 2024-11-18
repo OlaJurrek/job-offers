@@ -205,3 +205,33 @@
 .green .color:nth-child(9) {
   background-color: var(--green-900);
 }
+
+/* Yellow */
+
+.yellow .color:nth-child(1) {
+  background-color: var(--yellow-100);
+}
+.yellow .color:nth-child(2) {
+  background-color: var(--yellow-200);
+}
+.yellow .color:nth-child(3) {
+  background-color: var(--yellow-300);
+}
+.yellow .color:nth-child(4) {
+  background-color: var(--yellow-400);
+}
+.yellow .color:nth-child(5) {
+  background-color: var(--yellow-500);
+}
+.yellow .color:nth-child(6) {
+  background-color: var(--yellow-600);
+}
+.yellow .color:nth-child(7) {
+  background-color: var(--yellow-700);
+}
+.yellow .color:nth-child(8) {
+  background-color: var(--yellow-800);
+}
+.yellow .color:nth-child(9) {
+  background-color: var(--yellow-900);
+}

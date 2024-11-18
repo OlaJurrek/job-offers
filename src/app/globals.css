@@ -16,7 +16,7 @@
   --accent-400: #fff;
   --accent-500: hsl(175, 85%, 69%);
   --accent-600: #fff;
-  --accent-700: #40d2c6;
+  --accent-700: hsl(175, 62%, 54%);
   --accent-800: #fff;
   --accent-900: #fff;
 
@@ -50,15 +50,17 @@
   --green-800: hsl(170, 56%, 25%);
   --green-900: hsl(170, 56%, 20%);
 
-  --yellow-100: yellow;
-  --yellow-200: yellow;
+  --yellow-100: hsl(39, 100%, 66%);
+  --yellow-200: hsl(35, 100%, 66%);
   --yellow-300: yellow;
-  --yellow-400: yellow;
-  --yellow-500: yellow;
-  --yellow-600: yellow;
+  /* z tego hue zielone zrobic */
+  --yellow-400: hsl(161, 100%, 36%);
+  /* to chyba bedzie dobry start dla zoltych */
+  --yellow-500: hsl(45, 100%, 61%);
+  --yellow-600: hsl(46, 100%, 66%);
   --yellow-700: yellow;
-  --yellow-800: yellow;
-  --yellow-900: yellow;
+  --yellow-800: #fff;
+  --yellow-900: hsl(11, 100%, 70%);
 
   --violet: #7b10c1;
   --violet-100: #f1d6f1;
