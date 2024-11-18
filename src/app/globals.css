@@ -20,16 +20,6 @@
   --accent-800: hsl(175, 92%, 34%);
   --accent-900: hsl(175, 85%, 25%);
 
-  /* --green-100: hsl(170, 56%, 95%);
-  --green-200: hsl(170, 76%, 85%);
-  --green-300: hsl(170, 66%, 70%);
-  --green-400: hsl(170, 56%, 56%);
-  --green-500: hsl(170, 56%, 41%);
-  --green-600: hsl(170, 56%, 37%);
-  --green-700: hsl(170, 56%, 30%);
-  --green-800: hsl(170, 56%, 25%);
-  --green-900: hsl(170, 56%, 20%); */
-
   --green-100: hsl(161, 86%, 95%);
   --green-200: hsl(161, 76%, 85%);
   --green-300: hsl(161, 66%, 70%);
@@ -38,7 +28,7 @@
   --green-600: hsl(161, 76%, 37%);
   --green-700: hsl(161, 86%, 30%);
   --green-800: hsl(161, 86%, 25%);
-  --green-900: hsl(161, 86%, 20%);
+  --green-900: hsl(161, 86%, 15%);
 
   --gray-100: hsl(220, 40%, 99%);
   --gray-200: hsl(228, 20%, 92%);
@@ -58,7 +48,7 @@
   --red-600: hsl(349, 100%, 42%);
   --red-700: hsl(349, 100%, 35%);
   --red-800: hsl(351, 100%, 30%);
-  --red-900: hsl(353, 100%, 25%);
+  --red-900: hsl(353, 100%, 20%);
 
   --yellow-100: hsl(50, 100%, 94%);
   --yellow-200: hsl(50, 100%, 88%);
@@ -95,10 +85,6 @@
   --color-notice-bg: hsl(235deg 0% 100%);
   --color-warning: hsl(35deg 100% 46%);
   --color-warning-bg: hsl(40deg 100% 94%);
-  --color-success: hsl(120deg 80% 35%);
-  --color-success-bg: hsl(120deg 90% 96%);
-  --color-error: hsl(345deg 100% 50%);
-  --color-error-bg: hsl(350deg 90% 96%);
 }
 
 *,

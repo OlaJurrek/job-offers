@@ -37,7 +37,7 @@
   color: black;
 }
 
-.notice {
+/* .notice {
   background: var(--color-notice-bg);
 }
 .notice .iconContainer {
@@ -48,16 +48,20 @@
 }
 .warning .iconContainer {
   color: var(--color-warning);
-}
+} */
+
 .success {
-  background: var(--color-success-bg);
+  background: var(--green-100);
+  color: var(--green-900);
 }
 .success .iconContainer {
-  color: var(--color-success);
+  color: var(--green-600);
 }
+
 .error {
-  background: var(--color-error-bg);
+  background: var(--red-100);
+  color: var(--red-900);
 }
 .error .iconContainer {
-  color: var(--color-error);
+  color: var(--red-600);
 }
