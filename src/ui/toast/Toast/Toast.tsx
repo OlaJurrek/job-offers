@@ -16,6 +16,8 @@ const ICONS_BY_VARIANT = {
   error: ExclamationCircleIcon,
 };
 
+const AUTO_HIDE_DURATION = 10000;
+
 type ToastProps = {
   id: string;
   variant: ToastVariant;
@@ -26,8 +28,16 @@ export default function Toast({ id, variant, children }: ToastProps) {
   const { dismissToast } = React.useContext(ToastContext) as ToastContextType;
   const Icon = ICONS_BY_VARIANT[variant];
 
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!dismissToast) return;
+      dismissToast(id);
+    }, AUTO_HIDE_DURATION);
+    return () => clearTimeout(timeoutId);
+  }, [id, dismissToast]);
+
   if (!dismissToast) {
-    return;
+    throw new Error("Toast must be in ToastProvider!");
   }
 
   return (
