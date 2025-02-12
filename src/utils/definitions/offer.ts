@@ -2,8 +2,7 @@ import { z } from "zod";
 
 const MIN_LENGTH = 25;
 
-export const OfferSchema = z.object({
-  id: z.string(),
+export const UploadedOfferSchema = z.object({
   active: z.boolean(),
   description: z
     .string()
@@ -16,4 +15,10 @@ export const OfferSchema = z.object({
     .min(MIN_LENGTH, { message: `Must be at least ${MIN_LENGTH} characters` }),
 });
 
-export type Offer = z.infer<typeof OfferSchema>;
+export const OfferDBSchema = UploadedOfferSchema.extend({
+  id: z.string(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+});
+
+export type UploadedOffer = z.infer<typeof UploadedOfferSchema>;
